@@ -24,7 +24,11 @@ Future<void> main() async {
     final host = emulatorHostOverride.isNotEmpty
         ? emulatorHostOverride
         : kIsWeb
-            ? (Uri.base.host.isEmpty ? 'localhost' : Uri.base.host)
+            // "localhost" bazı bilgisayarlarda emülatörün dinlemediği IPv6
+            // adresine gider; bu yüzden 127.0.0.1 kullanılır.
+            ? (Uri.base.host.isEmpty || Uri.base.host == 'localhost'
+                ? '127.0.0.1'
+                : Uri.base.host)
             : '10.0.2.2';
     await FirebaseAuth.instance.useAuthEmulator(host, 9099);
     FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
