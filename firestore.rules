@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Mat Düellosu güvenlik kuralları.
+// Uygulama hiçbir belgeye doğrudan yazamaz; tüm yazma işlemleri
+// Cloud Functions üzerinden yapılır (puan, Taş, XP hilesini önler).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Oyuncu yalnızca kendi profilini okuyabilir.
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Odayı yalnızca içindeki oyuncular okuyabilir. Rakibin adı, avatarı
+    // ve skoru oda belgesine kopyalanır; profiline erişilmez.
+    match /rooms/{code} {
+      allow read: if request.auth != null
+                  && request.auth.uid in resource.data.memberUids;
+      allow write: if false;
+
+      // Soruların doğru cevapları ve verilen cevaplar: yalnızca sunucu.
+      match /private/{doc} {
+        allow read, write: if false;
+      }
+    }
+
+    // Biten maçları yalnızca o maçta oynayanlar okuyabilir.
+    match /matches/{id} {
+      allow read: if request.auth != null
+                  && request.auth.uid in resource.data.playerUids;
+      allow write: if false;
+    }
+
+    // Soru havuzu, antrenman oturumları, satın almalar vb.: yalnızca sunucu.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

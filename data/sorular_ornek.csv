@@ -1,0 +1,21 @@
+id,konu,zorluk,metin,sik_a,sik_b,sik_c,sik_d,dogru,cozum,gorsel,mod
+q_0001,carpanlar_katlar,2,72 sayısının kaç tane pozitif tam sayı böleni vardır?,10,12,8,9,1,"$72 = 2^3 \cdot 3^2$ olduğundan $(3+1)(2+1) = 12$",,ikisi
+q_0002,carpanlar_katlar,1,24 ve 36 sayılarının en büyük ortak böleni (EBOB) kaçtır?,6,8,12,18,2,"$24 = 2^3 \cdot 3$, $36 = 2^2 \cdot 3^2$; EBOB $= 2^2 \cdot 3 = 12$",,ikisi
+q_0003,carpanlar_katlar,1,6 ve 8 sayılarının en küçük ortak katı (EKOK) kaçtır?,12,24,48,16,1,"$6 = 2 \cdot 3$, $8 = 2^3$; EKOK $= 2^3 \cdot 3 = 24$",,ikisi
+q_0004,uslu_ifadeler,1,$2^{-3}$ ifadesinin değeri kaçtır?,$-8$,$\frac{1}{8}$,$-\frac{1}{8}$,$\frac{1}{6}$,1,$2^{-3} = \frac{1}{2^3} = \frac{1}{8}$,,ikisi
+q_0005,uslu_ifadeler,1,$3^4 \cdot 3^{-2}$ işleminin sonucu kaçtır?,9,3,27,81,0,$3^{4-2} = 3^2 = 9$,,ikisi
+q_0006,uslu_ifadeler,2,"$0{,}00052$ sayısının bilimsel gösterimi hangisidir?","$5{,}2 \cdot 10^{-3}$",$52 \cdot 10^{-5}$,"$5{,}2 \cdot 10^{-4}$","$0{,}52 \cdot 10^{-3}$",2,"Virgül 4 basamak sağa kayar: $5{,}2 \cdot 10^{-4}$",,ikisi
+q_0007,karekoklu_ifadeler,1,$\sqrt{50} = a\sqrt{2}$ ise $a$ kaçtır?,2,5,10,25,1,$\sqrt{50} = \sqrt{25 \cdot 2} = 5\sqrt{2}$,,ikisi
+q_0008,karekoklu_ifadeler,2,$\sqrt{12} + \sqrt{27}$ işleminin sonucu hangisidir?,$5\sqrt{6}$,$\sqrt{39}$,$6\sqrt{3}$,$5\sqrt{3}$,3,$2\sqrt{3} + 3\sqrt{3} = 5\sqrt{3}$,,ikisi
+q_0009,veri_analizi,1,"200 kişilik bir grubun dağılımını gösteren daire grafiğinde $90^\circ$'lik dilim kaç kişiyi gösterir?",25,45,50,90,2,$200 \cdot \frac{90}{360} = 50$,,ikisi
+q_0010,olasilik,1,Bir zar atıldığında üst yüze asal sayı gelme olasılığı kaçtır?,$\frac{1}{2}$,$\frac{1}{3}$,$\frac{2}{3}$,$\frac{1}{6}$,0,"Asal sayılar 2, 3 ve 5'tir: $\frac{3}{6} = \frac{1}{2}$",,ikisi
+q_0011,olasilik,1,İçinde 3 kırmızı ve 5 mavi top bulunan torbadan rastgele çekilen bir topun kırmızı olma olasılığı kaçtır?,$\frac{3}{5}$,$\frac{5}{8}$,$\frac{3}{8}$,$\frac{1}{3}$,2,Toplam 8 top vardır: $\frac{3}{8}$,,ikisi
+q_0012,cebirsel_ifadeler,1,$(x+3)^2$ ifadesinin açılımı hangisidir?,$x^2+9$,$x^2+3x+9$,$x^2+6x+6$,$x^2+6x+9$,3,$(a+b)^2 = a^2 + 2ab + b^2$ özdeşliğinden $x^2 + 6x + 9$,,ikisi
+q_0013,cebirsel_ifadeler,1,$x^2 - 16$ ifadesinin çarpanlara ayrılmış hâli hangisidir?,$(x-4)^2$,$(x-4)(x+4)$,$(x-8)(x+2)$,$(x+4)^2$,1,İki kare farkı: $a^2 - b^2 = (a-b)(a+b)$,,ikisi
+q_0014,dogrusal_denklemler,1,$3x - 7 = 11$ ise $x$ kaçtır?,4,5,6,18,2,$3x = 18$ olduğundan $x = 6$,,ikisi
+q_0015,dogrusal_denklemler,1,$y = 2x - 3$ doğrusunun eğimi kaçtır?,2,$-3$,3,$\frac{1}{2}$,0,$y = mx + n$ biçiminde eğim $m = 2$'dir,,ikisi
+q_0016,esitsizlikler,1,$2x + 1 > 7$ eşitsizliğinin çözümü hangisidir?,$x < 3$,$x > 4$,$x > 3$,$x > 6$,2,$2x > 6$ olduğundan $x > 3$,,ikisi
+q_0017,ucgenler,1,Dik kenarları 6 cm ve 8 cm olan dik üçgenin hipotenüsü kaç cm'dir?,12,14,9,10,3,$\sqrt{6^2 + 8^2} = \sqrt{100} = 10$,,ikisi
+q_0018,eslik_benzerlik,2,Benzerlik oranı $\frac{2}{3}$ olan iki üçgenden küçüğünün bir kenarı 8 cm ise büyüğünün karşılık gelen kenarı kaç cm'dir?,12,10,16,24,0,$\frac{8}{x} = \frac{2}{3}$ olduğundan $x = 12$,,ikisi
+q_0019,donusum_geometrisi,1,"$A(3, -2)$ noktasının x eksenine göre yansıması hangisidir?","$(-3, -2)$","$(3, 2)$","$(-3, 2)$","$(2, 3)$",1,"x eksenine göre yansımada y'nin işareti değişir: $(3, 2)$",,ikisi
+q_0020,geometrik_cisimler,2,Taban yarıçapı 3 cm ve yüksekliği 5 cm olan silindirin hacmi kaç cm³'tür? ($\pi = 3$ alınız.),45,90,135,270,2,$V = \pi r^2 h = 3 \cdot 9 \cdot 5 = 135$,,ikisi
