@@ -10,6 +10,7 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'services/api.dart';
 import 'services/prefs.dart';
+import 'theme.dart';
 
 /// Yerel emülatörle çalıştırmak için:
 ///   flutter run -d chrome --dart-define=USE_EMULATOR=true
@@ -47,14 +48,7 @@ class MatDuellosuApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mat Düellosu',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE0B341),
-          brightness: Brightness.dark,
-          surface: const Color(0xFF14181F),
-        ),
-        useMaterial3: true,
-      ),
+      theme: Brand.theme(),
       home: const AuthGate(),
     );
   }

@@ -17,6 +17,13 @@ Maç, Soru sonucu, Maç sonucu, Antrenman, Profil ve Ayarlar.
 | `data/sorular_ornek.csv` | 20 örnek soru. |
 | `functions/scripts/upload_questions.js` | Soru yükleme betiği. |
 
+## Görünüm ve marka
+
+- Renkler tek yerden değişir: `lib/theme.dart` içindeki `Brand` sınıfı.
+- Logo: `assets/logo.png` adıyla bir dosya koyarsan giriş ve ana menüde
+  otomatik kullanılır (kare, şeffaf arka plan, en az 512x512). Yoksa at
+  simgesi görünür.
+
 ## Proje dokümanına göre yapılan düzeltmeler
 
 - **Giriş:** Google ile giriş ana yöntemdir (ilerleme hesaba kaydedilir).

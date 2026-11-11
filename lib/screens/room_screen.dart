@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../data/game_data.dart';
 import '../services/api.dart';
 import '../services/prefs.dart';
+import '../theme.dart';
 import '../widgets/common.dart';
 
 /// Bekleme salonu, maç, soru sonucu ve maç sonucu.
@@ -278,9 +279,21 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     return Center(
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Text('Hazır ol!', style: t.textTheme.headlineSmall),
-        Text('$n',
-            style: t.textTheme.displayLarge
-                ?.copyWith(fontSize: 120, color: t.colorScheme.primary)),
+        PopIn(
+          key: ValueKey(n),
+          child: Text('$n',
+              style: t.textTheme.displayLarge?.copyWith(
+                  fontSize: 140,
+                  fontWeight: FontWeight.w900,
+                  color: t.colorScheme.primary,
+                  shadows: const [
+                    Shadow(color: Color(0xFF7A5A12), offset: Offset(0, 6)),
+                    Shadow(
+                        color: Colors.black87,
+                        offset: Offset(0, 12),
+                        blurRadius: 14),
+                  ])),
+        ),
       ]),
     );
   }
@@ -337,32 +350,35 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
         for (var i = 0; i < options.length; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: _OptionButton(
+            child: OptionTile(
               letter: 'ABCD'[i],
               text: options[i],
               state: correctIndex != null
                   ? (i == correctIndex
-                      ? _OptState.correct
+                      ? OptState.correct
                       : i == myChoice
-                          ? _OptState.wrong
-                          : _OptState.idle)
-                  : (i == myChoice ? _OptState.selected : _OptState.idle),
+                          ? OptState.wrong
+                          : OptState.idle)
+                  : (i == myChoice ? OptState.selected : OptState.idle),
               onTap: locked ? null : () => _answer(index, i),
             ),
           ),
         if (reveal != null) ...[
           const SizedBox(height: 4),
-          Text(
-            myChoice == null
-                ? 'Boş bıraktın'
-                : results![_uid]['correct'] == true
-                    ? 'Doğru!'
-                    : 'Yanlış',
-            textAlign: TextAlign.center,
-            style: t.textTheme.titleLarge?.copyWith(
-                color: results?[_uid]?['correct'] == true
-                    ? Colors.green
-                    : t.colorScheme.error),
+          PopIn(
+            child: Text(
+              myChoice == null
+                  ? 'Boş bıraktın'
+                  : results![_uid]['correct'] == true
+                      ? 'Doğru!'
+                      : 'Yanlış',
+              textAlign: TextAlign.center,
+              style: t.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: results?[_uid]?['correct'] == true
+                      ? Brand.correct
+                      : Brand.wrong),
+            ),
           ),
           if ((reveal['solution'] as String).isNotEmpty)
             Card(
@@ -414,7 +430,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                   Text(e.key == _uid ? 'Sen' : e.value['name'] as String,
                       style: t.textTheme.bodySmall,
                       overflow: TextOverflow.ellipsis),
-                  Text('${asInt(e.value['score'])}',
+                  AnimatedCount(asInt(e.value['score']),
                       style: t.textTheme.titleMedium),
                   if (results != null)
                     Text(
@@ -445,11 +461,27 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     final isHost = r['hostUid'] == _uid;
     final won = ranking.isNotEmpty && ranking.first['uid'] == _uid;
     const medals = ['🥇', '🥈', '🥉', '4.'];
+    return Stack(children: [
+      _resultBody(r, t, ranking, players, mine, isHost, won, medals),
+      if (won) const Positioned.fill(child: Confetti()),
+    ]);
+  }
+
+  Widget _resultBody(Map<String, dynamic> r, ThemeData t, List<Map> ranking,
+      Map<String, dynamic> players, Map mine, bool isHost, bool won,
+      List<String> medals) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(won ? 'Şah mat! Kazandın' : 'Maç bitti',
-            style: t.textTheme.headlineMedium, textAlign: TextAlign.center),
+        PopIn(
+          child: Text(won ? 'Şah mat!' : 'Maç bitti',
+              style: t.textTheme.displaySmall?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: won ? Brand.primary : null),
+              textAlign: TextAlign.center),
+        ),
+        if (won)
+          Text('Kazandın', style: t.textTheme.titleMedium, textAlign: TextAlign.center),
         const SizedBox(height: 16),
         for (var i = 0; i < ranking.length; i++)
           Card(
@@ -476,7 +508,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                         '${players[ranking[i]['uid']]['reaction']['emoji']}',
                         style: const TextStyle(fontSize: 24)),
                   ),
-                Text('${asInt(ranking[i]['score'])}',
+                AnimatedCount(asInt(ranking[i]['score']),
                     style: t.textTheme.titleLarge),
               ]),
             ),
@@ -525,59 +557,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
           child: const Text('Ana menü'),
         ),
       ],
-    );
-  }
-}
-
-enum _OptState { idle, selected, correct, wrong }
-
-class _OptionButton extends StatelessWidget {
-  final String letter;
-  final String text;
-  final _OptState state;
-  final VoidCallback? onTap;
-  const _OptionButton(
-      {required this.letter,
-      required this.text,
-      required this.state,
-      required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final c = Theme.of(context).colorScheme;
-    final (bg, fg) = switch (state) {
-      _OptState.idle => (c.surfaceContainerHigh, c.onSurface),
-      _OptState.selected => (c.primary, c.onPrimary),
-      _OptState.correct => (const Color(0xFF2E7D32), Colors.white),
-      _OptState.wrong => (c.error, c.onError),
-    };
-    return Material(
-      color: bg,
-      borderRadius: BorderRadius.circular(14),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            children: [
-              Text(letter,
-                  style: TextStyle(
-                      color: fg.withValues(alpha: 0.7),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18)),
-              const SizedBox(width: 16),
-              Expanded(
-                child: MathText(text, style: TextStyle(color: fg, fontSize: 20)),
-              ),
-              if (state == _OptState.correct)
-                Icon(Icons.check, color: fg)
-              else if (state == _OptState.wrong)
-                Icon(Icons.close, color: fg),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

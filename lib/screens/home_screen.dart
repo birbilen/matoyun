@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Page;
 
 import '../data/game_data.dart';
 import '../services/api.dart';
+import '../theme.dart';
 import '../widgets/common.dart';
 import 'profile_screen.dart';
 import 'room_entry_screen.dart';
@@ -81,10 +82,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 32),
-          Center(
-            child: Text('♞',
-                style: TextStyle(fontSize: 72, color: t.colorScheme.primary)),
-          ),
+          const Center(child: Logo(size: 96)),
           Center(child: Text('Mat Düellosu', style: t.textTheme.headlineMedium)),
           const SizedBox(height: 32),
           _MenuButton(
@@ -133,22 +131,35 @@ class _MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Theme.of(context).colorScheme;
+    final t = Theme.of(context).textTheme;
+    final fg = primary ? const Color(0xFF2B2005) : Colors.white;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Card(
-        margin: EdgeInsets.zero,
-        color: primary ? c.primaryContainer : null,
-        clipBehavior: Clip.antiAlias,
-        child: ListTile(
-          enabled: onTap != null,
-          onTap: onTap,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          leading: Icon(icon, size: 32),
-          title: Text(title, style: Theme.of(context).textTheme.titleLarge),
-          subtitle: Text(subtitle),
-          trailing: onTap == null ? null : const Icon(Icons.chevron_right),
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Raised(
+        color: primary ? Brand.primary : Brand.surface,
+        depth: 6,
+        radius: 20,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        onTap: onTap,
+        child: Row(
+          children: [
+            Icon(icon, size: 36, color: fg),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: t.titleLarge?.copyWith(
+                          color: fg, fontWeight: FontWeight.w800)),
+                  Text(subtitle,
+                      style: t.bodyMedium
+                          ?.copyWith(color: fg.withValues(alpha: 0.8))),
+                ],
+              ),
+            ),
+            if (onTap != null) Icon(Icons.chevron_right, color: fg),
+          ],
         ),
       ),
     );

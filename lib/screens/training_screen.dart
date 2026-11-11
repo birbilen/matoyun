@@ -121,36 +121,19 @@ class _TrainingScreenState extends State<TrainingScreen> {
             padding: const EdgeInsets.only(bottom: 10),
             child: Opacity(
               opacity: res == null && _removed.contains(i) ? 0.3 : 1,
-              child: Material(
-                color: correctIndex == null
-                    ? (i == _choice
-                        ? t.colorScheme.primary
-                        : t.colorScheme.surfaceContainerHigh)
+              child: OptionTile(
+                letter: 'ABCD'[i],
+                text: options[i],
+                state: correctIndex == null
+                    ? (i == _choice ? OptState.selected : OptState.idle)
                     : i == correctIndex
-                        ? const Color(0xFF2E7D32)
+                        ? OptState.correct
                         : i == _choice
-                            ? t.colorScheme.error
-                            : t.colorScheme.surfaceContainerHigh,
-                borderRadius: BorderRadius.circular(14),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  onTap: res != null || _busy || _removed.contains(i)
-                      ? null
-                      : () => _answer(i),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
-                    child: Row(children: [
-                      Text('ABCD'[i],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)),
-                      const SizedBox(width: 16),
-                      Expanded(
-                          child: MathText(options[i],
-                              style: const TextStyle(fontSize: 20))),
-                    ]),
-                  ),
-                ),
+                            ? OptState.wrong
+                            : OptState.idle,
+                onTap: res != null || _busy || _removed.contains(i)
+                    ? null
+                    : () => _answer(i),
               ),
             ),
           ),

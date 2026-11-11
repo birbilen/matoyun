@@ -1,0 +1,4 @@
+Tek Hamlede Mat logosunu bu klasöre "logo.png" adıyla koy
+(kare, şeffaf arka planlı, en az 512x512 piksel). Dosya varsa giriş ve
+ana menü ekranlarında otomatik olarak kullanılır; yoksa at simgesi görünür.
+Marka renkleri lib/theme.dart dosyasında tek yerden değiştirilir.

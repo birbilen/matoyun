@@ -26,7 +26,8 @@ class LoginScreen extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 48),
-          Text('♞', style: TextStyle(fontSize: 88, color: t.colorScheme.primary)),
+          const Logo(size: 110),
+          const SizedBox(height: 8),
           Text('Mat Düellosu', style: t.textTheme.headlineLarge),
           const SizedBox(height: 8),
           Text('Arkadaşlarınla LGS matematik düellosu',
