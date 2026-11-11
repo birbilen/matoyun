@@ -117,6 +117,26 @@ bu normaldir.
 
 Sunucu kurallarının otomatik testi: `cd functions` ve `npm test`
 
+## 3b. Telefonda test (aynı Wi-Fi)
+
+1. Bilgisayarın yerel IP adresini bul: cmd'de `ipconfig` yaz,
+   "IPv4 Adresi" satırındaki değeri not et (ör. `192.168.1.35`).
+2. Emülatörü her zamanki gibi başlat. Windows güvenlik duvarı sorarsa
+   **Özel ağlar** için izin ver.
+3. Uygulamayı Chrome yerine ağa açık sunucu olarak başlat:
+
+   ```
+   flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8000 --dart-define=USE_EMULATOR=true
+   ```
+
+4. Telefonun tarayıcısında `http://192.168.1.35:8000` adresini aç
+   (kendi IP adresinle). Bilgisayarda da aynı adresi açıp telefona karşı
+   oynayabilirsin.
+
+Açılmıyorsa: telefon ve bilgisayar aynı Wi-Fi'de mi, güvenlik duvarı izni
+verildi mi kontrol et. Okul/misafir ağları cihazların birbirini görmesini
+engelleyebilir; o durumda evdeki ağı ya da telefonun hotspot'unu kullan.
+
 ## 4. Gerçek Firebase projesine geçiş (öğrencilerle test için)
 
 1. <https://console.firebase.google.com> → **Proje ekle**.
